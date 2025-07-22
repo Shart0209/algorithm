@@ -8,7 +8,10 @@ import (
 	"sync"
 )
 
-const blockElem uint64 = 64
+const (
+	blockElem   uint64 = 64
+	defaultHash uint64 = 3
+)
 
 type BloomFilter struct {
 	m             uint64 // кол-во элементов
@@ -22,9 +25,7 @@ type BloomFilter struct {
 	enableOptimal bool
 }
 
-// New fpRate - допустимая вероятность ложного срабатывания
-// n - число элементов
-// enableOptimal - option установки оптимального кол-ва элементов и хеш функций
+// New n - число элементов
 func New(n uint64, opts ...Option) (*BloomFilter, error) {
 	var m, k, size uint64
 
@@ -41,7 +42,7 @@ func New(n uint64, opts ...Option) (*BloomFilter, error) {
 		opt(bf)
 	}
 
-	m, k = n, 3
+	m, k = n, defaultHash
 	if size = uint64(math.Ceil(float64(n) / float64(blockElem))); size <= 1 {
 		k = 1
 	}
@@ -54,11 +55,11 @@ func New(n uint64, opts ...Option) (*BloomFilter, error) {
 		}
 	}
 
-	bf.bitSet = make([]bitmap, int(size))
-	bf.salt = generateSalt(int(k))
 	bf.m = m
 	bf.k = k
 	bf.blockSize = size
+	bf.salt = generateSalt(int(k))
+	bf.bitSet = make([]bitmap, int(size))
 
 	return bf, nil
 }

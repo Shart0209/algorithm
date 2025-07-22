@@ -25,11 +25,7 @@ func TestUnit_Check(t *testing.T) {
 
 func BenchmarkBloomFilter_Check(b *testing.B) {
 	b.ReportAllocs()
-	//fb, err := New(10_000_000)
-	//require.NoError(b, err)
-	//fb.Add([]byte("test_5"))
 
-	//b.ResetTimer()
 	b.RunParallel(func(pb *testing.PB) {
 		fb, err := New(10_000_000)
 		require.NoError(b, err)
