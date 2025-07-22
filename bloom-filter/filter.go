@@ -14,13 +14,14 @@ const (
 )
 
 type BloomFilter struct {
-	m             uint64 // кол-во элементов
-	k             uint64 // кол-во хешей
-	blockSize     uint64 //размер массива
-	salt          []byte
-	bitSet        []bitmap
-	mu            *sync.Mutex
-	hash          *xxhash.Digest
+	m         uint64 // кол-во элементов
+	k         uint64 // кол-во хешей
+	blockSize uint64 //размер массива
+	salt      []byte
+	bitSet    []bitmap
+	mu        *sync.Mutex
+	hash      *xxhash.Digest
+	// options
 	fpRate        float64
 	enableOptimal bool
 }
