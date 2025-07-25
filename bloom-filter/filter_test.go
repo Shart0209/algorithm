@@ -23,6 +23,9 @@ func TestUnit_Check(t *testing.T) {
 	require.False(t, fb.Check([]byte("test_131")))
 }
 
+// cpu: Intel(R) Core(TM) Ultra 7 165H
+// BenchmarkBloomFilter_Check
+// BenchmarkBloomFilter_Check-22    	83264004	        14.00 ns/op	       0 B/op	       0 allocs/op
 func BenchmarkBloomFilter_Check(b *testing.B) {
 	b.ReportAllocs()
 
@@ -31,9 +34,22 @@ func BenchmarkBloomFilter_Check(b *testing.B) {
 		require.NoError(b, err)
 		fb.Add([]byte("test_5"))
 		for pb.Next() {
-			//fb, err := New(10_000_000)
-			//require.NoError(b, err)
-			//fb.Add([]byte("test_5"))
+			fb.Check([]byte("test_505"))
+		}
+	})
+}
+
+// cpu: Intel(R) Core(TM) Ultra 7 165H
+// BenchmarkBloomFilter
+// BenchmarkBloomFilter-22    	   21447	     53252 ns/op	 1253591 B/op	       5 allocs/op
+func BenchmarkBloomFilter(b *testing.B) {
+	b.ReportAllocs()
+
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			fb, err := New(10_000_000)
+			require.NoError(b, err)
+			fb.Add([]byte("test_5"))
 			fb.Check([]byte("test_505"))
 		}
 	})
