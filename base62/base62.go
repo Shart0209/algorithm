@@ -37,13 +37,13 @@ func (b *base62) Encode(src uint64) string {
 		return ""
 	}
 
-	res := bytes.NewBuffer(make([]byte, 0, 11))
+	res := make([]byte, 0, 11)
 	for src > 0 {
-		res.WriteString(string(b.enc[src%base]))
+		res = append(res, b.enc[src%base])
 		src = src / base
 	}
 
-	return res.String()
+	return string(res)
 }
 
 func (b *base62) Decode(src string) uint64 {

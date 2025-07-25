@@ -13,10 +13,10 @@ func TestUnit_Encode(t *testing.T) {
 	require.Equal(t, uint64(math.MaxUint64), b.Decode(enc))
 }
 
-//cpu: Intel(R) Core(TM) Ultra 7 165H
-//BenchmarkBloomFilter_Check
-//BenchmarkBloomFilter_Check-22    	54544496	        18.53 ns/op	      16 B/op	       1 allocs/op
-func BenchmarkBloomFilter_Check(b *testing.B) {
+// cpu: Intel(R) Core(TM) Ultra 7 165H
+// BenchmarkBase62_Encode
+// BenchmarkBase62_Encode-22    	178984873	         6.983 ns/op	       0 B/op	       0 allocs/op
+func BenchmarkBase62_Encode(b *testing.B) {
 	b.ReportAllocs()
 
 	b.RunParallel(func(pb *testing.PB) {
