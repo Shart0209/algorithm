@@ -33,10 +33,6 @@ func New(encoder string) Base62 {
 }
 
 func (b *base62) Encode(src uint64) string {
-	if src == 0 {
-		return ""
-	}
-
 	res := make([]byte, 0, 11)
 	for src > 0 {
 		res = append(res, b.enc[src%base])
@@ -47,10 +43,6 @@ func (b *base62) Encode(src uint64) string {
 }
 
 func (b *base62) Decode(src string) uint64 {
-	if src == "" {
-		return 0
-	}
-
 	var intermediate uint64
 	for i := len(src) - 1; i >= 0; i-- {
 		intermediate = (base * intermediate) + uint64(bytes.IndexRune(b.enc, rune(src[i])))
